@@ -36,7 +36,7 @@ export const roles = [
 export const stats = [
   { value: '2.5+', label: 'Years shipping' },
   { value: '10M+', label: 'Students served' },
-  { value: '50+', label: 'Secure API endpoints' },
+  { value: '1000+', label: 'Secure API endpoints' },
   { value: '50+', label: 'Tenant orgs' },
 ];
 
@@ -151,12 +151,12 @@ export const projects = [
     category: 'Healthcare SaaS · Remote Monitoring',
     description:
       'Cloud-native, HIPAA-conscious platform for AI-powered remote patient safety monitoring after surgery.',
-    highlight: '50+ endpoints · 7 roles · 10K+ data points/day',
+    highlight: '1000+ endpoints · 7 roles · 10K+ data points/day',
     link: '',
     tags: ['MERN', 'TypeScript', 'GCP Cloud Run', 'RBAC'],
     bullets: [
       'Architected and deployed a cloud-native, HIPAA-conscious healthcare SaaS platform for AI-powered remote patient safety monitoring, enabling early detection of post-surgical complications and surgical site infections across orthopaedic, OB/GYN, abdominal and cardiac specialties.',
-      'Built on the MERN stack with TypeScript using a clean layered architecture, delivering 50+ secure RESTful endpoints with JWT authentication and RBAC across 7 distinct user roles.',
+      'Built on the MERN stack with TypeScript using a clean layered architecture, delivering 1000+ secure RESTful endpoints with JWT authentication and RBAC across 7 distinct user roles.',
       'Engineered a real-time monitoring system integrating device/sensor data, daily health assessments, exercise tracking, pain management and ML-based predictive analytics — processing 10,000+ patient data points daily.',
       'Deployed production infrastructure on GCP: Cloud Run for containerised microservices, Cloud Storage with signed URLs for medical files, Secret Manager for credentials, and IAM/VPC for network security.',
       'Optimised MongoDB through compound indexing, aggregation pipeline tuning and asynchronous background job queues for bulk operations and third-party integrations.',
