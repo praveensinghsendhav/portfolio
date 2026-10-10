@@ -152,7 +152,7 @@ export const projects = [
     description:
       'Cloud-native, HIPAA-conscious platform for AI-powered remote patient safety monitoring after surgery.',
     highlight: '50+ endpoints · 7 roles · 10K+ data points/day',
-    link: 'https://trusshealth.ai',
+    link: '',
     tags: ['MERN', 'TypeScript', 'GCP Cloud Run', 'RBAC'],
     bullets: [
       'Architected and deployed a cloud-native, HIPAA-conscious healthcare SaaS platform for AI-powered remote patient safety monitoring, enabling early detection of post-surgical complications and surgical site infections across orthopaedic, OB/GYN, abdominal and cardiac specialties.',
