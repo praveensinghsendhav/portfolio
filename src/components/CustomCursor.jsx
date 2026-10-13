@@ -3,10 +3,12 @@ import { gsap } from '../lib/motion';
 
 const INTERACTIVE = 'a, button, input, textarea, select, label, [data-cursor]';
 
-// Dot + trailing ring + soft red spotlight. Only enabled for mouse/trackpad users.
+// Gold dot + trailing ring + soft champagne glow. Elements with data-cursor-label="View"
+// grow the ring into a filled gold disc showing that label. Mouse / trackpad only.
 const CustomCursor = () => {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
+  const labelRef = useRef(null);
   const glowRef = useRef(null);
 
   useEffect(() => {
@@ -18,6 +20,7 @@ const CustomCursor = () => {
 
     const dot = dotRef.current;
     const ring = ringRef.current;
+    const label = labelRef.current;
     const glow = glowRef.current;
 
     gsap.set([dot, ring, glow], { xPercent: -50, yPercent: -50, opacity: 0 });
@@ -45,15 +48,22 @@ const CustomCursor = () => {
     };
 
     const onOver = (e) => {
+      const labelled = e.target.closest?.('[data-cursor-label]');
       const hovering = !!e.target.closest?.(INTERACTIVE);
+      const text = labelled?.getAttribute('data-cursor-label') ?? '';
+      if (text) label.textContent = text;
+
       gsap.to(ring, {
-        scale: hovering ? 1.7 : 1,
-        backgroundColor: hovering ? 'rgba(229,9,20,0.12)' : 'rgba(229,9,20,0)',
-        borderColor: hovering ? 'rgba(229,9,20,0.9)' : 'rgba(229,9,20,0.55)',
-        duration: 0.3,
+        width: labelled ? 88 : 40,
+        height: labelled ? 88 : 40,
+        scale: !labelled && hovering ? 1.6 : 1,
+        backgroundColor: labelled ? 'rgba(226,182,107,0.95)' : hovering ? 'rgba(226,182,107,0.1)' : 'rgba(226,182,107,0)',
+        borderColor: hovering || labelled ? 'rgba(226,182,107,0.9)' : 'rgba(242,237,227,0.35)',
+        duration: 0.35,
         ease: 'power3.out',
       });
-      gsap.to(dot, { scale: hovering ? 0.5 : 1, duration: 0.3 });
+      gsap.to(label, { opacity: labelled ? 1 : 0, scale: labelled ? 1 : 0.6, duration: 0.25 });
+      gsap.to(dot, { scale: hovering || labelled ? 0 : 1, duration: 0.3 });
     };
 
     const onDown = () => gsap.to(ring, { scale: 0.8, duration: 0.15 });
@@ -88,16 +98,21 @@ const CustomCursor = () => {
         className="fixed top-0 left-0 z-[1] h-[640px] w-[640px] rounded-full opacity-0"
         style={{
           background:
-            'radial-gradient(circle, rgba(229,9,20,0.13) 0%, rgba(229,9,20,0.04) 40%, transparent 68%)',
+            'radial-gradient(circle, rgba(226,182,107,0.09) 0%, rgba(143,163,255,0.04) 40%, transparent 68%)',
         }}
       />
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 z-[10001] h-10 w-10 rounded-full border border-brand/55 opacity-0"
-      />
+        className="fixed top-0 left-0 z-[10001] flex h-10 w-10 items-center justify-center rounded-full border border-ivory/35 opacity-0"
+      >
+        <span
+          ref={labelRef}
+          className="font-mono text-[10px] font-bold tracking-[0.2em] text-ink uppercase opacity-0"
+        />
+      </div>
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 z-[10001] h-2 w-2 rounded-full bg-brand opacity-0 shadow-[0_0_12px_#E50914]"
+        className="fixed top-0 left-0 z-[10001] h-1.5 w-1.5 rounded-full bg-gold opacity-0 shadow-[0_0_12px_#E2B66B]"
       />
     </div>
   );

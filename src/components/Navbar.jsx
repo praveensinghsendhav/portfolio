@@ -3,13 +3,24 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { navLinks, profile } from '../data/profile';
 import { scrollToId, setScrollLocked } from '../lib/motion';
 
+const ease = [0.22, 1, 0.36, 1];
+
+const Monogram = ({ className = '' }) => (
+  <span
+    className={`relative flex items-center justify-center rounded-full border border-gold/40 font-display italic text-gold ${className}`}
+  >
+    {profile.firstName[0]}
+    <span className="text-ivory/80">{profile.lastName[0]}</span>
+  </span>
+);
+
 const Navbar = ({ visible }) => {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [active, setActive] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Glass background after leaving the top; hide on scroll down, reveal on scroll up.
+  // Denser glass after leaving the top; hide on scroll down, reveal on scroll up.
   useEffect(() => {
     let lastY = window.scrollY;
     const onScroll = () => {
@@ -62,75 +73,72 @@ const Navbar = ({ visible }) => {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-out ${
+        className={`fixed inset-x-0 top-0 z-50 px-4 pt-4 transition-all duration-500 ease-out md:pt-5 ${
           visible ? 'opacity-100' : 'opacity-0'
-        } ${hidden && !menuOpen ? '-translate-y-full' : 'translate-y-0'} ${
-          scrolled
-            ? 'border-b border-white/[0.06] bg-black/60 backdrop-blur-xl'
-            : 'bg-gradient-to-b from-black/80 to-transparent'
-        }`}
+        } ${hidden && !menuOpen ? '-translate-y-[130%]' : 'translate-y-0'}`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-12">
-          <a
-            href="#home"
-            onClick={go('home')}
-            className="flex items-center gap-1.5 font-display text-3xl leading-none tracking-wider text-brand drop-shadow-[0_2px_14px_rgba(229,9,20,0.6)]"
-          >
-            {profile.brand}
-            <span className="mb-1 h-1.5 w-1.5 rounded-full bg-white" />
+        <div
+          className={`mx-auto flex max-w-5xl items-center justify-between rounded-full border py-2 pr-2 pl-2.5 transition-all duration-500 ${
+            scrolled || menuOpen
+              ? 'border-ivory/10 bg-ink/70 shadow-[0_20px_50px_rgba(0,0,0,0.45)] backdrop-blur-xl'
+              : 'border-ivory/[0.06] bg-ink/30 backdrop-blur-md'
+          }`}
+        >
+          <a href="#home" onClick={go('home')} className="group flex items-center gap-3">
+            <Monogram className="h-10 w-10 text-lg transition-transform duration-500 group-hover:rotate-[360deg]" />
+            <span className="hidden font-display text-lg tracking-tight text-ivory sm:block">
+              {profile.firstName}
+              <span className="text-gold">.</span>
+            </span>
           </a>
 
-          <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
+          <nav className="hidden items-center md:flex" aria-label="Primary">
             {navLinks.map(({ id, label }) => (
               <a
                 key={id}
                 href={`#${id}`}
                 onClick={go(id)}
                 aria-current={active === id ? 'page' : undefined}
-                className={`relative px-3.5 py-2 text-[13px] font-medium transition-colors duration-300 ${
-                  active === id ? 'text-white' : 'text-white/55 hover:text-white'
+                className={`relative rounded-full px-4 py-2 text-[13px] font-medium transition-colors duration-300 ${
+                  active === id ? 'text-ink' : 'text-ivory/60 hover:text-ivory'
                 }`}
               >
-                {label}
                 {active === id && (
                   <motion.span
-                    layoutId="nav-underline"
-                    className="absolute inset-x-3.5 -bottom-0.5 h-[2px] rounded-full bg-brand"
+                    layoutId="nav-pill"
+                    className="absolute inset-0 rounded-full bg-gradient-to-r from-gold-light to-gold"
                     transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                   />
                 )}
+                <span className="relative">{label}</span>
               </a>
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <a
               href="#contact"
               onClick={go('contact')}
-              className="hidden rounded-md bg-brand px-5 py-2 text-xs font-bold uppercase tracking-widest text-white shadow-[0_0_24px_rgba(229,9,20,0.45)] transition-all duration-300 hover:bg-brand-dark hover:shadow-[0_0_34px_rgba(229,9,20,0.7)] active:scale-95 sm:inline-block"
+              className="group hidden items-center gap-2 rounded-full border border-gold/40 px-5 py-2.5 text-xs font-semibold tracking-wide text-gold transition-all duration-300 hover:bg-gold hover:text-ink sm:flex md:hidden lg:flex"
             >
-              Hire Me
+              Let's talk
+              <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
             </a>
             <button
               type="button"
               onClick={() => setMenuOpen((o) => !o)}
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={menuOpen}
-              className="relative flex h-10 w-10 items-center justify-center rounded-md border border-white/15 bg-white/5 md:hidden"
+              className="relative flex h-10 w-10 items-center justify-center rounded-full border border-ivory/15 bg-ivory/5 md:hidden"
             >
               <span
-                className={`absolute h-[1.5px] w-5 bg-white transition-transform duration-300 ${
-                  menuOpen ? 'rotate-45' : '-translate-y-1.5'
+                className={`absolute h-[1.5px] w-4 bg-ivory transition-transform duration-300 ${
+                  menuOpen ? 'rotate-45' : '-translate-y-1'
                 }`}
               />
               <span
-                className={`absolute h-[1.5px] w-5 bg-white transition-opacity duration-300 ${
-                  menuOpen ? 'opacity-0' : ''
-                }`}
-              />
-              <span
-                className={`absolute h-[1.5px] w-5 bg-white transition-transform duration-300 ${
-                  menuOpen ? '-rotate-45' : 'translate-y-1.5'
+                className={`absolute h-[1.5px] w-4 bg-ivory transition-transform duration-300 ${
+                  menuOpen ? '-rotate-45' : 'translate-y-1'
                 }`}
               />
             </button>
@@ -142,28 +150,29 @@ const Navbar = ({ visible }) => {
         {menuOpen && (
           <motion.nav
             aria-label="Mobile"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 flex flex-col justify-center bg-black/95 px-8 backdrop-blur-xl md:hidden"
+            initial={{ clipPath: 'circle(0% at 100% 0%)' }}
+            animate={{ clipPath: 'circle(150% at 100% 0%)' }}
+            exit={{ clipPath: 'circle(0% at 100% 0%)' }}
+            transition={{ duration: 0.7, ease }}
+            className="fixed inset-0 z-40 flex flex-col justify-center bg-ink-2 px-8 md:hidden"
           >
-            <ul className="space-y-2">
+            <div className="pointer-events-none absolute -top-20 -right-20 h-80 w-80 rounded-full bg-gold/15 blur-[100px]" />
+            <ul className="relative space-y-1">
               {navLinks.map(({ id, label }, i) => (
                 <motion.li
                   key={id}
-                  initial={{ opacity: 0, y: 24 }}
+                  initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.05 + i * 0.05, ease: [0.22, 1, 0.36, 1], duration: 0.5 }}
+                  transition={{ delay: 0.15 + i * 0.05, ease, duration: 0.6 }}
                 >
                   <a
                     href={`#${id}`}
                     onClick={go(id)}
-                    className={`block font-display text-5xl tracking-wide transition-colors ${
-                      active === id ? 'text-brand' : 'text-white/80 hover:text-white'
+                    className={`flex items-baseline gap-4 font-display text-5xl font-light tracking-tight transition-colors ${
+                      active === id ? 'text-gold italic' : 'text-ivory/80 hover:text-ivory'
                     }`}
                   >
-                    <span className="mr-3 align-middle font-mono text-xs text-white/30">0{i + 1}</span>
+                    <span className="font-mono text-[11px] not-italic text-ivory/30">0{i + 1}</span>
                     {label}
                   </a>
                 </motion.li>
@@ -173,8 +182,8 @@ const Navbar = ({ visible }) => {
               href={`mailto:${profile.email}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.45 }}
-              className="mt-12 font-mono text-xs break-all text-white/50"
+              transition={{ delay: 0.5 }}
+              className="relative mt-12 border-t border-ivory/10 pt-6 font-mono text-xs break-all text-ivory/50"
             >
               {profile.email}
             </motion.a>

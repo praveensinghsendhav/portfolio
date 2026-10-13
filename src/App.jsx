@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import Preloader from './components/Preloader';
 import CustomCursor from './components/CustomCursor';
 import Navbar from './components/Navbar';
+import ScrollProgress from './components/ScrollProgress';
+import TechRibbon from './components/TechRibbon';
 import Hero from './components/Hero';
 import About from './components/About';
 import Expertise from './components/Expertise';
@@ -26,13 +28,15 @@ function App() {
   const handleLoaded = useCallback(() => setLoading(false), []);
 
   return (
-    <main className="grain relative min-h-screen bg-ink text-white">
+    <main className="grain relative min-h-screen bg-ink text-ivory">
       {loading && <Preloader onReveal={handleReveal} onComplete={handleLoaded} />}
 
       <CustomCursor />
+      <ScrollProgress />
       <Navbar visible={revealed} />
 
       <Hero ready={revealed} />
+      <TechRibbon />
       <About />
       <Expertise />
       <Skills />

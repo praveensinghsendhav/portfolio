@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import Magnetic from './Magnetic';
+import { Eyebrow } from './SectionHeading';
 import { profile } from '../data/profile';
 
 const TOPICS = ['Job opportunity', 'Freelance project', 'Collaboration', 'Just saying hi'];
@@ -48,12 +50,12 @@ function composeLinks({ subject, body }) {
 
 const Field = ({ id, label, error, optional, children }) => (
   <div className="group relative">
-    <label htmlFor={id} className="mb-2 flex items-center justify-between font-mono text-[10px] tracking-[0.25em] text-white/45 uppercase">
+    <label htmlFor={id} className="mb-2 flex items-center justify-between font-mono text-[10px] tracking-[0.25em] text-ivory/45 uppercase">
       <span>
         {label}
-        {!optional && <span className="text-brand"> *</span>}
+        {!optional && <span className="text-gold"> *</span>}
       </span>
-      {optional && <span className="tracking-normal normal-case text-white/30">Optional</span>}
+      {optional && <span className="tracking-normal normal-case text-ivory/30">Optional</span>}
     </label>
     {children}
     <AnimatePresence>
@@ -63,7 +65,7 @@ const Field = ({ id, label, error, optional, children }) => (
           initial={{ opacity: 0, y: -4 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
-          className="mt-2 text-xs text-rose-400"
+          className="mt-2 text-xs text-copper"
         >
           {error}
         </motion.p>
@@ -73,8 +75,8 @@ const Field = ({ id, label, error, optional, children }) => (
 );
 
 const inputClass = (hasError) =>
-  `w-full rounded-xl border bg-white/[0.03] px-4 py-3.5 text-[15px] text-white placeholder-white/25 transition-all duration-300 outline-none focus:bg-white/[0.06] focus:ring-4 ${
-    hasError ? 'border-rose-500/60 focus:ring-rose-500/15' : 'border-white/10 hover:border-white/20 focus:border-brand/70 focus:ring-brand/15'
+  `w-full rounded-2xl border bg-ivory/[0.03] px-4 py-3.5 text-[15px] text-ivory placeholder-ivory/25 transition-all duration-300 outline-none focus:bg-ivory/[0.06] focus:ring-4 ${
+    hasError ? 'border-copper/60 focus:ring-copper/15' : 'border-ivory/10 hover:border-ivory/20 focus:border-gold/70 focus:ring-gold/15'
   }`;
 
 const Contact = () => {
@@ -124,14 +126,15 @@ const Contact = () => {
   };
 
   return (
-    <section ref={sectionRef} id="contact" className="relative w-full overflow-hidden border-t border-white/[0.06] bg-[#0b0b0b] px-5 pt-28 pb-24 md:px-12 md:pt-36">
-      <div className="pointer-events-none absolute top-1/2 left-1/2 h-[640px] w-[640px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/12 blur-[170px]" />
+    <section ref={sectionRef} id="contact" className="relative w-full overflow-hidden border-t border-ivory/[0.06] bg-ink px-5 pt-28 pb-24 md:px-12 md:pt-36">
+      <div className="pointer-events-none absolute top-1/2 left-1/2 h-[640px] w-[640px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/[0.08] blur-[170px]" />
+      <div className="pointer-events-none absolute -right-40 bottom-0 h-[420px] w-[420px] animate-aurora rounded-full bg-mist/[0.08] blur-[140px]" />
       <motion.div
         style={{ y: watermarkY }}
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-10 flex justify-center font-display text-[26vw] leading-none text-brand/[0.07] select-none"
+        className="text-outline pointer-events-none absolute inset-x-0 top-10 flex justify-center font-display text-[22vw] leading-none whitespace-nowrap italic select-none"
       >
-        CONTACT
+        Say hello
       </motion.div>
 
       <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-16">
@@ -143,33 +146,28 @@ const Contact = () => {
           transition={{ duration: 0.9, ease }}
           className="flex flex-col lg:col-span-5"
         >
-          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-brand/30 bg-black/60 px-3.5 py-1 font-mono text-[10px] tracking-[0.25em] text-white/80 uppercase backdrop-blur-xl md:text-[11px]">
-            <span className="h-1.5 w-1.5 rounded-full bg-brand shadow-[0_0_10px_#E50914]" />
-            <span className="font-bold text-brand">Episode 05</span>
-            <span className="text-white/25">|</span>
-            <span>Get in touch</span>
-          </div>
-          <h2 className="mt-5 font-display text-[clamp(3rem,7vw,5.5rem)] leading-[0.9] tracking-wide">
-            Let's make the
-            <span className="block bg-gradient-to-r from-brand via-rose-500 to-brand-dark bg-clip-text text-transparent">
-              Next Episode.
+          <Eyebrow index="05" label="Contact" />
+          <h2 className="mt-6 font-display text-[clamp(2.6rem,5.5vw,4.6rem)] leading-[1.02] font-light tracking-[-0.02em]">
+            Let's build something
+            <span className="block italic">
+              <span className="text-gradient">remarkable.</span>
             </span>
           </h2>
-          <p className="mt-6 max-w-md text-base leading-relaxed font-light text-white/60">
+          <p className="mt-6 max-w-md text-base leading-relaxed font-light text-ivory/60">
             Have a role, a product idea or a question? Fill in the form — your email app opens with everything
             pre-filled, so your message lands straight in my inbox.
           </p>
 
           <div className="mt-10 space-y-3">
-            <div className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-colors hover:border-white/20">
+            <div className="flex items-center justify-between gap-3 rounded-2xl border border-ivory/10 bg-ivory/[0.03] p-4 transition-colors hover:border-ivory/20">
               <a href={`mailto:${profile.email}`} className="min-w-0">
-                <p className="font-mono text-[10px] tracking-[0.25em] text-white/40 uppercase">Email</p>
-                <p className="mt-1 truncate text-sm font-medium text-white">{profile.email}</p>
+                <p className="font-mono text-[10px] tracking-[0.25em] text-ivory/40 uppercase">Email</p>
+                <p className="mt-1 truncate text-sm font-medium text-ivory">{profile.email}</p>
               </a>
               <button
                 type="button"
                 onClick={() => copy(profile.email, 'email')}
-                className="shrink-0 rounded-lg border border-white/10 px-3 py-2 font-mono text-[10px] tracking-widest text-white/70 uppercase transition-colors hover:border-brand/60 hover:text-white"
+                className="shrink-0 rounded-lg border border-ivory/10 px-3 py-2 font-mono text-[10px] tracking-widest text-ivory/70 uppercase transition-colors hover:border-gold/60 hover:text-ivory"
               >
                 {copied === 'email' ? 'Copied ✓' : 'Copy'}
               </button>
@@ -185,18 +183,18 @@ const Contact = () => {
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-colors hover:border-white/20"
+                  className="group flex items-center justify-between rounded-2xl border border-ivory/10 bg-ivory/[0.03] p-4 transition-colors hover:border-ivory/20"
                 >
                   <div className="min-w-0">
-                    <p className="font-mono text-[10px] tracking-[0.25em] text-white/40 uppercase">{s.label}</p>
-                    <p className="mt-1 truncate text-sm font-medium text-white">{s.href.replace(/^https?:\/\/(www\.)?/, '')}</p>
+                    <p className="font-mono text-[10px] tracking-[0.25em] text-ivory/40 uppercase">{s.label}</p>
+                    <p className="mt-1 truncate text-sm font-medium text-ivory">{s.href.replace(/^https?:\/\/(www\.)?/, '')}</p>
                   </div>
-                  <svg className="h-4 w-4 shrink-0 text-white/40 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <svg className="h-4 w-4 shrink-0 text-ivory/40 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-ivory" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M9 7h8v8" />
                   </svg>
                 </a>
               ))}
-            <p className="pt-2 font-mono text-[10px] tracking-[0.25em] text-white/35 uppercase">Based in {profile.location}</p>
+            <p className="pt-2 font-mono text-[10px] tracking-[0.25em] text-ivory/35 uppercase">Based in {profile.location}</p>
           </div>
         </motion.div>
 
@@ -206,9 +204,9 @@ const Contact = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 1, ease, delay: 0.1 }}
-          className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-panel/90 p-6 shadow-[0_40px_100px_rgba(0,0,0,0.8)] backdrop-blur-2xl md:p-10 lg:col-span-7"
+          className="relative overflow-hidden rounded-[2rem] border border-ivory/10 bg-panel/90 p-6 shadow-[0_40px_100px_rgba(0,0,0,0.8)] backdrop-blur-2xl md:p-10 lg:col-span-7"
         >
-          <div className="absolute top-0 left-1/2 h-[2px] w-48 -translate-x-1/2 bg-gradient-to-r from-transparent via-brand to-transparent" />
+          <div className="absolute top-0 left-1/2 h-[2px] w-48 -translate-x-1/2 bg-gradient-to-r from-transparent via-gold to-transparent" />
 
           <AnimatePresence mode="wait" initial={false}>
             {!submitted ? (
@@ -266,7 +264,7 @@ const Contact = () => {
                 </Field>
 
                 <fieldset>
-                  <legend className="mb-3 font-mono text-[10px] tracking-[0.25em] text-white/45 uppercase">What's this about?</legend>
+                  <legend className="mb-3 font-mono text-[10px] tracking-[0.25em] text-ivory/45 uppercase">What's this about?</legend>
                   <div className="flex flex-wrap gap-2">
                     {TOPICS.map((t) => (
                       <label key={t} className="relative">
@@ -278,7 +276,7 @@ const Contact = () => {
                           onChange={update('topic')}
                           className="peer sr-only"
                         />
-                        <span className="block rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-[13px] text-white/65 transition-all duration-300 select-none peer-checked:border-brand peer-checked:bg-brand/15 peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-brand hover:border-white/25 hover:text-white">
+                        <span className="block rounded-full border border-ivory/10 bg-ivory/[0.03] px-4 py-2 text-[13px] text-ivory/65 transition-all duration-300 select-none peer-checked:border-gold peer-checked:bg-gold/15 peer-checked:text-ivory peer-focus-visible:ring-2 peer-focus-visible:ring-gold hover:border-ivory/25 hover:text-ivory">
                           {t}
                         </span>
                       </label>
@@ -300,25 +298,29 @@ const Contact = () => {
                     aria-describedby={showError('message') ? 'contact-message-error' : undefined}
                     className={`${inputClass(showError('message'))} resize-none`}
                   />
-                  <span className="pointer-events-none absolute right-3 bottom-3 font-mono text-[10px] text-white/30">
+                  <span className="pointer-events-none absolute right-3 bottom-3 font-mono text-[10px] text-ivory/30">
                     {form.message.length}/{MAX_MESSAGE}
                   </span>
                   </div>
                 </Field>
 
-                <div className="flex flex-col-reverse items-start justify-between gap-5 border-t border-white/[0.07] pt-6 sm:flex-row sm:items-center">
-                  <p className="max-w-xs text-xs leading-relaxed text-white/40">
+                <div className="flex flex-col-reverse items-start justify-between gap-5 border-t border-ivory/[0.07] pt-6 sm:flex-row sm:items-center">
+                  <p className="max-w-xs text-xs leading-relaxed text-ivory/40">
                     Opens your email app with this message ready to send. Nothing is stored on this site.
                   </p>
-                  <button
-                    type="submit"
-                    className="group flex w-full items-center justify-center gap-3 rounded-xl bg-brand px-8 py-4 text-xs font-bold tracking-widest text-white uppercase shadow-[0_10px_40px_rgba(229,9,20,0.45)] transition-all duration-300 hover:bg-brand-dark hover:shadow-[0_14px_50px_rgba(229,9,20,0.65)] active:scale-[0.98] sm:w-auto"
-                  >
-                    Send via email
-                    <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </button>
+                  <Magnetic className="w-full sm:w-auto">
+                    <button
+                      type="submit"
+                      className="group flex w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-gold-light via-gold to-gold-deep py-3.5 pr-3.5 pl-8 text-sm font-semibold text-ink shadow-[0_10px_40px_rgba(226,182,107,0.3)] transition-shadow duration-300 hover:shadow-[0_14px_50px_rgba(226,182,107,0.5)] active:scale-[0.98] sm:w-auto"
+                    >
+                      Send via email
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-gold transition-transform duration-500 group-hover:translate-x-1">
+                        <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </span>
+                    </button>
+                  </Magnetic>
                 </div>
               </motion.form>
             ) : (
@@ -335,15 +337,15 @@ const Contact = () => {
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ type: 'spring', stiffness: 260, damping: 18, delay: 0.1 }}
-                  className="flex h-16 w-16 items-center justify-center rounded-full bg-brand/15 ring-1 ring-brand/50"
+                  className="flex h-16 w-16 items-center justify-center rounded-full bg-gold/15 ring-1 ring-gold/50"
                 >
-                  <svg className="h-7 w-7 text-brand" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                  <svg className="h-7 w-7 text-gold" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </motion.div>
-                <h3 className="mt-6 font-display text-4xl tracking-wide">Your draft is ready</h3>
-                <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/60">
-                  Your email app should have opened with everything filled in — just hit <b className="text-white">Send</b>.
+                <h3 className="mt-6 font-display text-4xl font-light">Your draft is <span className="text-gold italic">ready</span></h3>
+                <p className="mt-3 max-w-sm text-sm leading-relaxed text-ivory/60">
+                  Your email app should have opened with everything filled in — just hit <b className="text-ivory">Send</b>.
                   Nothing opened? Use one of these instead:
                 </p>
 
@@ -352,7 +354,7 @@ const Contact = () => {
                     href={submitted.gmail}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 rounded-xl bg-white px-4 py-3 text-sm font-bold text-black transition-colors hover:bg-white/85"
+                    className="flex-1 rounded-full bg-gradient-to-r from-gold-light to-gold px-4 py-3 text-sm font-semibold text-ink transition-shadow hover:shadow-[0_10px_30px_rgba(226,182,107,0.4)]"
                   >
                     Open in Gmail
                   </a>
@@ -360,7 +362,7 @@ const Contact = () => {
                     href={submitted.outlook}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 rounded-xl border border-white/15 bg-white/[0.05] px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-white/10"
+                    className="flex-1 rounded-full border border-ivory/15 bg-ivory/[0.05] px-4 py-3 text-sm font-bold text-ivory transition-colors hover:bg-ivory/10"
                   >
                     Open in Outlook
                   </a>
@@ -368,14 +370,14 @@ const Contact = () => {
                 <div className="mt-2.5 flex w-full max-w-md flex-col gap-2.5 sm:flex-row">
                   <a
                     href={submitted.mailto}
-                    className="flex-1 rounded-xl border border-white/10 px-4 py-3 text-sm text-white/70 transition-colors hover:border-white/25 hover:text-white"
+                    className="flex-1 rounded-full border border-ivory/10 px-4 py-3 text-sm text-ivory/70 transition-colors hover:border-ivory/25 hover:text-ivory"
                   >
                     Try email app again
                   </a>
                   <button
                     type="button"
                     onClick={() => copy(`To: ${profile.email}\nSubject: ${submitted.subject}\n\n${submitted.body}`, 'draft')}
-                    className="flex-1 rounded-xl border border-white/10 px-4 py-3 text-sm text-white/70 transition-colors hover:border-white/25 hover:text-white"
+                    className="flex-1 rounded-full border border-ivory/10 px-4 py-3 text-sm text-ivory/70 transition-colors hover:border-ivory/25 hover:text-ivory"
                   >
                     {copied === 'draft' ? 'Copied ✓' : 'Copy message'}
                   </button>
@@ -384,7 +386,7 @@ const Contact = () => {
                 <button
                   type="button"
                   onClick={reset}
-                  className="mt-8 font-mono text-[10px] tracking-[0.25em] text-white/40 uppercase underline-offset-4 transition-colors hover:text-white hover:underline"
+                  className="mt-8 font-mono text-[10px] tracking-[0.25em] text-ivory/40 uppercase underline-offset-4 transition-colors hover:text-ivory hover:underline"
                 >
                   ← Write another message
                 </button>

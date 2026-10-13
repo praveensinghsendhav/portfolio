@@ -1,17 +1,42 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------
+   "Midnight & Gold" — editorial theme.
+   Change the palette here; every component reads these tokens.
+------------------------------------------------------------------- */
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-  --font-display: "Bebas Neue", "Impact", sans-serif;
+  --font-display: "Fraunces", "Georgia", serif;
 
-  --color-brand: #e50914;
-  --color-brand-dark: #b20710;
-  --color-ink: #050505;
-  --color-panel: #141414;
+  --color-ink: #0a0e19;
+  --color-ink-2: #0d1220;
+  --color-panel: #121a2c;
+  --color-ivory: #f2ede3;
+  --color-gold: #e2b66b;
+  --color-gold-light: #f6e2b3;
+  --color-gold-deep: #b98a45;
+  --color-copper: #d98b63;
+  --color-mist: #8fa3ff;
 
   --animate-float: float 6s ease-in-out infinite;
+  --animate-float-slow: float 8s ease-in-out infinite;
   --animate-marquee: marquee 40s linear infinite;
+  --animate-marquee-reverse: marquee 46s linear infinite reverse;
+  --animate-spin-slow: spin 18s linear infinite;
+  --animate-aurora: aurora 18s ease-in-out infinite;
+  --animate-scrollcue: scrollcue 1.8s ease-in-out infinite;
+  --animate-orbit: spin 36s linear infinite;
+  --animate-orbit-reverse: spin 36s linear infinite reverse;
+  --animate-orbit-slow: spin 56s linear infinite;
+  --animate-orbit-slow-reverse: spin 56s linear infinite reverse;
+  --animate-ring: spin 6s linear infinite;
+  --animate-ripple: ripple 3.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+
+  @keyframes ripple {
+    0% { transform: scale(1); opacity: 0.55; }
+    100% { transform: scale(1.32); opacity: 0; }
+  }
 
   @keyframes float {
     0%, 100% { transform: translateY(0); }
@@ -22,10 +47,21 @@
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
   }
+
+  @keyframes aurora {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    33% { transform: translate3d(6%, -8%, 0) scale(1.12); }
+    66% { transform: translate3d(-7%, 5%, 0) scale(0.92); }
+  }
+
+  @keyframes scrollcue {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(300%); }
+  }
 }
 
 html {
-  background-color: #050505;
+  background-color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -41,15 +77,15 @@ html.lenis, html.lenis body { height: auto; }
 
 body {
   margin: 0;
-  background-color: #050505;
-  color: #fff;
+  background-color: var(--color-ink);
+  color: var(--color-ivory);
   font-family: var(--font-sans);
   overflow-x: clip;
 }
 
 ::selection {
-  background: #e50914;
-  color: #fff;
+  background: var(--color-gold);
+  color: var(--color-ink);
 }
 
 /* Custom cursor only on precise pointers (mouse / trackpad). */
@@ -59,19 +95,49 @@ html.has-custom-cursor * {
 }
 
 :focus-visible {
-  outline: 2px solid #e50914;
+  outline: 2px solid var(--color-gold);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
 /* Slim branded scrollbar */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: #050505; }
-::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 999px; border: 2px solid #050505; }
-::-webkit-scrollbar-thumb:hover { background: #e50914; }
+::-webkit-scrollbar-track { background: var(--color-ink); }
+::-webkit-scrollbar-thumb { background: #232c44; border-radius: 999px; border: 2px solid var(--color-ink); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-gold); }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Champagne-to-copper gradient text. Padding stops italic overhang from being clipped. */
+.text-gradient {
+  background-image: linear-gradient(100deg, #f6e2b3 0%, #e2b66b 40%, #d98b63 75%, #f6e2b3 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-right: 0.08em;
+  animation: shimmer 7s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
+
+/* Outlined serif text for oversized background words */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(226, 182, 107, 0.2);
+}
+
+/* Faint blueprint grid that fades out toward the edges */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(242, 237, 227, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 237, 227, 0.045) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse at center, #000 20%, transparent 75%);
+}
 
 /* Mouse-tracking spotlight for cards. Set --mouse-x / --mouse-y via trackSpotlight().
    The element must be positioned (relative / sticky / absolute) via a utility class. */
@@ -89,20 +155,20 @@ html.has-custom-cursor * {
   transition: opacity 0.4s ease;
   background: radial-gradient(
     420px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(229, 9, 20, 0.16),
+    rgba(226, 182, 107, 0.13),
     transparent 70%
   );
 }
 .spotlight:hover::before { opacity: 1; }
 
-/* Subtle film grain over the whole page */
+/* Subtle paper grain over the whole page */
 .grain::after {
   content: "";
   position: fixed;
   inset: -50%;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.035;
+  opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 

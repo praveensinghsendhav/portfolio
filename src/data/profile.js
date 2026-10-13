@@ -25,11 +25,18 @@ export const profile = {
     'Full-stack MERN developer with 2.5+ years of experience building scalable, production-grade web applications — from SEO-first Next.js frontends to AI-powered multi-tenant SaaS platforms.',
 };
 
+// Rotating phrases in the hero: "I build …"
 export const roles = [
-  'FULL-STACK // MERN ENGINEER',
-  'NEXT.JS // SSR · SSG · SEO',
-  'AI SAAS // LLM STREAMING',
-  'CLOUD // GCP · DOCKER',
+  'SEO-first Next.js frontends',
+  'AI-powered SaaS platforms',
+  'secure, scalable Node.js APIs',
+  'cloud-native systems on GCP',
+];
+
+// Scrolling ribbon under the hero.
+export const techStack = [
+  'Next.js', 'React', 'TypeScript', 'Node.js', 'Express', 'MongoDB',
+  'PostgreSQL', 'Redis', 'GCP', 'Docker', 'Stripe', 'LLM Streaming',
 ];
 
 // Every figure below comes straight from the resume.

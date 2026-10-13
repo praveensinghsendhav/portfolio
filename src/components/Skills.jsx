@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react';
+import { Eyebrow } from './SectionHeading';
 import { gsap, ScrollTrigger } from '../lib/motion';
 import { skillCategories } from '../data/profile';
 
@@ -87,32 +88,27 @@ const Skills = () => {
     <section
       id="skills"
       ref={sectionRef}
-      className="relative flex h-[100svh] w-full items-center justify-center overflow-hidden bg-[#0b0b0b] md:[perspective:1100px]"
+      className="relative flex h-[100svh] w-full items-center justify-center overflow-hidden bg-ink-2 md:[perspective:1100px]"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,#1a0305_0%,transparent_65%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(226,182,107,0.08)_0%,transparent_60%)]" />
+      <div className="bg-grid pointer-events-none absolute inset-0 opacity-60" />
 
       {/* Outlined background word */}
       <h2
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 flex items-center justify-center font-display text-[30vw] leading-none text-transparent md:text-[24vw]"
-        style={{ WebkitTextStroke: '1.5px rgba(229,9,20,0.18)' }}
+        className="text-outline pointer-events-none absolute inset-0 flex items-center justify-center font-display text-[24vw] leading-none italic md:text-[19vw]"
       >
-        SKILLS
+        Toolkit
       </h2>
 
       {/* Header + progress */}
       <div className="absolute inset-x-0 top-24 z-20 mx-auto flex max-w-7xl items-center justify-between px-5 md:top-28 md:px-12">
-        <div className="inline-flex items-center gap-2 rounded-full border border-brand/30 bg-black/60 px-3.5 py-1 font-mono text-[10px] tracking-[0.25em] text-white/80 uppercase backdrop-blur-xl md:text-[11px]">
-          <span className="h-1.5 w-1.5 rounded-full bg-brand shadow-[0_0_10px_#E50914]" />
-          <span className="font-bold text-brand">Episode 03</span>
-          <span className="text-white/25">|</span>
-          <span>Toolkit</span>
-        </div>
-        <div className="flex items-center gap-3 font-mono text-xs text-white/50">
-          <span className="text-white">{pad(active + 1)}</span>
-          <span className="relative h-[2px] w-20 overflow-hidden rounded-full bg-white/10 md:w-32">
+        <Eyebrow index="03" label="Skills" />
+        <div className="flex items-center gap-3 font-mono text-xs text-ivory/50">
+          <span className="text-gold">{pad(active + 1)}</span>
+          <span className="relative h-[2px] w-20 overflow-hidden rounded-full bg-ivory/10 md:w-32">
             <span
-              className="absolute inset-y-0 left-0 rounded-full bg-brand transition-[width] duration-500 ease-out"
+              className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-gold-light to-copper transition-[width] duration-500 ease-out"
               style={{ width: `${((active + 1) / total) * 100}%` }}
             />
           </span>
@@ -129,31 +125,30 @@ const Skills = () => {
           <article
             key={cat.title}
             ref={(el) => (cardsRef.current[i] = el)}
-            className="group relative flex h-[420px] w-[82vw] shrink-0 snap-center flex-col justify-between overflow-hidden rounded-[2rem] border border-white/10 bg-panel/95 p-7 shadow-[0_30px_70px_rgba(0,0,0,0.9)] backdrop-blur-xl transition-colors duration-500 hover:border-brand/60 sm:w-[360px] md:absolute md:h-[520px] md:w-[430px] md:p-10"
+            className="group relative flex h-[420px] w-[82vw] shrink-0 snap-center flex-col justify-between overflow-hidden rounded-[2rem] border border-ivory/10 bg-gradient-to-b from-panel to-ink p-7 shadow-[0_30px_70px_rgba(0,0,0,0.65)] transition-colors duration-500 hover:border-gold/50 sm:w-[360px] md:absolute md:h-[520px] md:w-[430px] md:p-10"
           >
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-brand/10 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+            <div className="pointer-events-none absolute -top-24 -right-24 h-56 w-56 rounded-full bg-gold/0 blur-3xl transition-colors duration-700 group-hover:bg-gold/20" />
+            <div className="absolute top-0 left-10 h-[2px] w-24 bg-gradient-to-r from-gold to-transparent" />
 
             <div className="relative flex items-center justify-between">
-              <span className="rounded-full border border-brand/25 bg-brand/10 px-3 py-1 font-mono text-[10px] font-bold tracking-widest text-brand uppercase">
+              <span className="rounded-full border border-gold/25 bg-gold/10 px-3 py-1 font-mono text-[10px] font-bold tracking-widest text-gold uppercase">
                 {cat.tag}
               </span>
-              <span className="font-mono text-xs text-white/35">
-                [ {pad(i + 1)} / {pad(total)} ]
-              </span>
+              <span className="font-display text-2xl text-ivory/25 italic">{pad(i + 1)}</span>
             </div>
 
             <div className="relative my-auto space-y-4">
-              <h3 className="font-display text-5xl leading-none tracking-wide text-white transition-colors duration-300 group-hover:text-brand md:text-6xl">
+              <h3 className="font-display text-4xl leading-[1.05] font-light tracking-[-0.01em] text-ivory transition-colors duration-300 group-hover:text-gold md:text-[2.75rem]">
                 {cat.title}
               </h3>
-              <p className="text-sm leading-relaxed font-light text-white/65 md:text-base">{cat.desc}</p>
+              <p className="text-sm leading-relaxed font-light text-ivory/60 md:text-base">{cat.desc}</p>
             </div>
 
-            <div className="relative flex flex-wrap gap-2 border-t border-white/10 pt-5">
+            <div className="relative flex flex-wrap gap-2 border-t border-ivory/10 pt-5">
               {cat.skills.map((skill) => (
                 <span
                   key={skill}
-                  className="rounded-md border border-white/10 bg-white/[0.04] px-2.5 py-1 font-mono text-[11px] text-white/80 transition-colors group-hover:border-brand/25"
+                  className="rounded-full border border-ivory/10 bg-ivory/[0.03] px-3 py-1 text-[11px] text-ivory/75 transition-colors group-hover:border-gold/25"
                 >
                   {skill}
                 </span>
@@ -163,7 +158,7 @@ const Skills = () => {
         ))}
       </div>
 
-      <p className="pointer-events-none absolute inset-x-0 bottom-8 z-20 text-center font-mono text-[10px] tracking-[0.3em] text-white/30 uppercase">
+      <p className="pointer-events-none absolute inset-x-0 bottom-8 z-20 text-center font-mono text-[10px] tracking-[0.3em] text-ivory/30 uppercase">
         <span className="hidden md:inline">Keep scrolling</span>
         <span className="md:hidden">Swipe to browse</span>
       </p>
